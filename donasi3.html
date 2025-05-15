@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Formulir Donasi</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: url('gambar1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      position: relative;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 0;
+    }
+
+    .form-container {
+      background-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+      z-index: 1;
+      position: relative;
+      padding: 30px 40px;
+      border-radius: 16px;
+      max-width: 450px;
+      width: 100%;
+      color: white;
+    }
+
+    h1 {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 5px;
+    }
+
+    p.subtitle {
+      text-align: center;
+      color: #dddddd;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      color: #ffffff;
+      margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border: 2px solid #e1e1e1;
+      border-radius: 8px;
+      font-size: 14px;
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+    }
+
+    select:invalid {
+      color: #aaa;
+    }
+
+    select option {
+      color: black;
+    }
+
+    textarea {
+      resize: vertical;
+      height: 80px;
+      color: white !important;
+    }
+
+    .payment-options label {
+      display: block;
+      font-weight: normal;
+      color: #f1f1f1;
+      margin-left: 5px;
+    }
+
+    .form-group input[type="radio"] {
+      margin-right: 8px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .submit-btn, .view-history-btn {
+      width: 100%;
+      background-color: #4031b4;
+      color: white;
+      padding: 12px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .submit-btn:hover, .view-history-btn:hover {
+      background-color: #2d2260;
+    }
+
+    .success-message {
+      text-align: center;
+      padding: 15px;
+      background-color: #dff6e0;
+      color: #267d57;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-weight: bold;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="form-container">
+    <h1>Formulir Donasi CampusCare</h1>
+    <p class="subtitle">Terima kasih telah berbagi kebaikan!</p>
+
+    <form id="donationForm">
+      <div class="form-group">
+        <label for="nama">👤 Nama Lengkap</label>
+        <input type="text" id="nama" name="nama" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">📧 Email (opsional)</label>
+        <input type="email" id="email" name="email">
+      </div>
+
+      <div class="form-group">
+        <label for="nominal">💰 Nominal Donasi (Rp)</label>
+        <input type="text" id="nominal" name="nominal" required inputmode="numeric" pattern="[0-9]*">
+      </div>
+
+      <div class="form-group">
+        <label>💳 Metode Pembayaran</label>
+        <div class="payment-options">
+          <label><input type="radio" name="metode" value="transfer"> Transfer Bank</label>
+          <label><input type="radio" name="metode" value="ewallet"> E-Wallet</label>
+          <label><input type="radio" name="metode" value="kartu"> Kartu Kredit/Debit</label>
+          <label><input type="radio" name="metode" value="qris"> QRIS</label>
+        </div>
+      </div>
+
+      <div id="bank-details" class="form-group hidden">
+        <label for="bank">🏦 Pilih Bank</label>
+        <select id="bank" name="bank">
+          <option value="">-- Pilih Bank --</option>
+          <option value="bca">BCA - 1234567890 a.n. Fandi Alfito</option>
+          <option value="bni">BNI - 9876543210 a.n. Fandi Alfito</option>
+          <option value="bri">BRI - 1122334455 a.n. Fandi Alfito</option>
+        </select>
+      </div>
+
+      <div id="ewallet-details" class="form-group hidden">
+        <label>📱 Nomor E-Wallet:</label>
+        <p>OVO/GoPay/Dana: <strong>0812-3456-7890</strong></p>
+      </div>
+
+      <div id="qris-details" class="form-group hidden">
+        <label>🔳 Scan QRIS:</label>
+        <p>Kode QR dapat dilihat setelah submit atau hubungi admin.</p>
+      </div>
+
+      <div class="form-group">
+        <label for="pesan">📝 Pesan atau Doa (opsional)</label>
+        <textarea id="pesan" name="pesan"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">DONASI SEKARANG</button>
+      <button type="button" onclick="window.open('riwayat.html', '_blank')" class="view-history-btn">Lihat Riwayat Donasi</button>
+    </form>
+
+    <div id="successMessage" class="success-message">
+      🎉 Donasi berhasil! Terima kasih atas kebaikan Anda.
+    </div>
+  </div>
+
+  <script>
+    const metodeRadios = document.querySelectorAll('input[name="metode"]');
+    const bankDetails = document.getElementById('bank-details');
+    const ewalletDetails = document.getElementById('ewallet-details');
+    const qrisDetails = document.getElementById('qris-details');
+    const form = document.getElementById('donationForm');
+    const successMessage = document.getElementById('successMessage');
+
+    metodeRadios.forEach(radio => {
+      radio.addEventListener('change', () => {
+        bankDetails.classList.add('hidden');
+        ewalletDetails.classList.add('hidden');
+        qrisDetails.classList.add('hidden');
+
+        if (radio.value === 'transfer') {
+          bankDetails.classList.remove('hidden');
+        } else if (radio.value === 'ewallet') {
+          ewalletDetails.classList.remove('hidden');
+        } else if (radio.value === 'qris') {
+          qrisDetails.classList.remove('hidden');
+        }
+      });
+    });
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const metodeDipilih = [...metodeRadios].some(radio => radio.checked);
+      if (!metodeDipilih) {
+        alert('⚠️ Silakan pilih metode pembayaran terlebih dahulu.');
+        return;
+      }
+
+      const nominal = form.nominal.value.trim();
+      if (!/^\d+$/.test(nominal)) {
+        alert('⚠️ Masukkan nominal donasi yang benar (hanya angka).');
+        form.nominal.focus();
+        return;
+      }
+
+      successMessage.style.display = 'block';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      const selectedMetode = form.metode.value;
+
+      const data = {
+        nama: form.nama.value,
+        email: form.email.value,
+        nominal: nominal,
+        metode: selectedMetode,
+        bank: form.bank ? form.bank.value : '',
+        pesan: form.pesan.value,
+        waktu: new Date().toLocaleString()
+      };
+
+      const riwayat = JSON.parse(localStorage.getItem('riwayatDonasi') || '[]');
+      riwayat.push(data);
+      localStorage.setItem('riwayatDonasi', JSON.stringify(riwayat));
+
+      form.reset();
+      bankDetails.classList.add('hidden');
+      ewalletDetails.classList.add('hidden');
+      qrisDetails.classList.add('hidden');
+
+      if (selectedMetode === 'qris') {
+        setTimeout(() => {
+          window.open('qris.html', '_blank');
+        }, 1500);
+      }
+    });
+  </script>
+</body>
+</html>
